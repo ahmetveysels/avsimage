@@ -9,10 +9,6 @@ part 'components/_svg_gradient_mask.dart';
 part 'functions/_check_local.dart';
 part 'functions/_check_svg.dart';
 
-/// AVSImage is a widget that can be used to display images from the network or local. All Images And SVGs can be displayed with this widget.
-///
-/// Supported AssetImage And NetworkImage And SVGImage
-///
 class AVSImage extends StatelessWidget {
   /// Image Url or Path
   final String url;
@@ -58,7 +54,7 @@ class AVSImage extends StatelessWidget {
   /// SVG NOT SUPPORTED
   final Widget? errorImgWidget;
 
-  /// Image cache status. JUST NETWORK IMAGE
+  /// NETWORK IMAGE cache status. 
   ///
   /// SVG NOT SUPPORTED
   ///

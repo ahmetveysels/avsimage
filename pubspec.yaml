@@ -1,13 +1,15 @@
 name: avs_image
-description: "AVSImage package. A Flutter package that you can get and use images from local and network. Keep your images in the cache directory. You can also use your svg files with this package. Gradient color SVG is supported. All in one and easy to use."
-
-version: 1.0.0
+description: "A Flutter package that you can get and use images and SVG from local and network . All in one and easy to use."
+topics:
+  - cache
+  - image
+  - network-image
+version: 1.0.1
 homepage: https://github.com/ahmetveysels
 repository: https://github.com/ahmetveysels/avsimage
-documentation: https://github.com/ahmetveysels/avsimage
 
 environment:
-  sdk: ">=3.2.5 <4.0.0"
+  sdk: ">=3.2.3 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
@@ -18,7 +20,7 @@ dependencies:
   logger: ^2.0.2+1
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.3
   flutter_test:
     sdk: flutter
 

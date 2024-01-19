@@ -4,7 +4,7 @@ AVSImage package. A Flutter package that you can get and use images from local a
 
 ## Features
 
-![Animated Dashed Circle Screenshot](https://ahmetveysel.com/flutterpackages/avsimage/screenshot.png)
+![Screenshot](https://ahmetveysel.com/flutterpackages/avsimage/screenshot.png)
 
 ## Getting started
 
