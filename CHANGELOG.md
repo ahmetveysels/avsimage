@@ -1,3 +1,7 @@
+## 1.1.1
+
+* Fix version
+
 ## 1.1.0
 
 * AVSImageProvider added.
