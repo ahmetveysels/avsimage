@@ -1,6 +1,8 @@
 # AVSImage
 
-AVSImage package. A Flutter package that you can get and use images from local and network. Keep your images in the cache directory. You can also use your svg files with this package. Gradient color SVG is supported. All in one and easy to use.
+AVSImage package. A Flutter package that you can get and use images from local and network. Keep your images in the cache directory. You can also use your SVG files with this package. Gradient color SVG is supported. All in one and easy to use.
+
+AVSImageProvider added. With this function you can easily use images and svg files as ImageProvider.
 
 ## Features
 
@@ -41,6 +43,26 @@ AVSImage(
     ),
 ),
 ```
+## Using AVSImageProvider 
+ImageProvider with Image
+```dart
+Container(
+    height: 200,
+    width: 300,
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(20),
+    color: Colors.grey[300],
+    image: DecorationImage(
+        fit: BoxFit.contain,
+        image: AVSImageProvider("https://www.svgrepo.com/show/530440/machine-vision.svg", scale: 9),
+        ),
+    ),
+    child: const Text("Image - SVG Provider"),
+),
+```
+
+ 
 
 
 

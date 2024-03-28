@@ -34,20 +34,20 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            // AVSImage(
+            //   "https://cdnuploads.aa.com.tr/uploads/Contents/2020/07/19/thumbs_b_c_24ab0f37a2ebc9b694d4c1fceeb2171c.jpg?v=130117",
+            //   isCircle: true,
+            //   width: 200,
+            //   height: 200,
+            //   alignment: Alignment.center,
+            //   errorImgWidget: const Icon(
+            //     Icons.error,
+            //     color: Colors.red,
+            //   ),
+            // ),
+            // const SizedBox(height: 30),
             AVSImage(
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/About_to_Launch_%2826075320352%29.jpg/1280px-About_to_Launch_%2826075320352%29.jpg",
-              isCircle: true,
-              width: 200,
-              height: 200,
-              alignment: Alignment.center,
-              errorImgWidget: const Icon(
-                Icons.error,
-                color: Colors.red,
-              ),
-            ),
-            const SizedBox(height: 30),
-            AVSImage(
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/About_to_Launch_%2826075320352%29.jpg/1280px-About_to_Launch_%2826075320352%29.jpg",
+              "https://cdnuploads.aa.com.tr/uploads/Contents/2020/07/19/thumbs_b_c_24ab0f37a2ebc9b694d4c1fceeb2171c.jpg?v=130117",
               radius: 20,
               height: 200,
               alignment: Alignment.center,
@@ -57,22 +57,53 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            AVSImage(
-              "errorimage",
+            Container(
               height: 200,
+              width: 300,
               alignment: Alignment.center,
-              errorImgWidget: const Column(
-                children: [
-                  Icon(
-                    Icons.error,
-                    color: Colors.red,
-                    size: 50,
-                  ),
-                  SizedBox(height: 5),
-                  Text("Error Image"),
-                ],
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.grey[300],
+                image: DecorationImage(
+                  fit: BoxFit.contain,
+                  image: AVSImageProvider("https://www.svgrepo.com/show/530440/machine-vision.svg", scale: 9),
+                ),
               ),
+              child: const Text("SVG Image Provider"),
             ),
+            const SizedBox(height: 30),
+            Container(
+              height: 200,
+              width: 200,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.grey[300],
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AVSImageProvider(
+                    "https://cdnuploads.aa.com.tr/uploads/Contents/2020/07/19/thumbs_b_c_24ab0f37a2ebc9b694d4c1fceeb2171c.jpg?v=130117",
+                  ),
+                ),
+              ),
+              child: const Text("Network Image Provider"),
+            ),
+            // AVSImage(
+            //   "errorimage",
+            //   height: 200,
+            //   alignment: Alignment.center,
+            //   errorImgWidget: const Column(
+            //     children: [
+            //       Icon(
+            //         Icons.error,
+            //         color: Colors.red,
+            //         size: 50,
+            //       ),
+            //       SizedBox(height: 5),
+            //       Text("Error Image"),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

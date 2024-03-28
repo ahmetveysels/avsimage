@@ -1,10 +1,13 @@
 name: avs_image
-description: "A Flutter package that you can get and use images and SVG from local and network . All in one and easy to use."
+description: "A Flutter package that you can get and use images and SVG from
+  local and network . Image - SVG Provider Supported"
 topics:
   - cache
   - image
   - network-image
-version: 1.0.1
+  - svg-provider
+  - avs-svg-provider
+version: 1.1.0
 homepage: https://github.com/ahmetveysels
 repository: https://github.com/ahmetveysels/avsimage
 
@@ -13,14 +16,15 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  avs_svg_provider: ^1.0.1
   cached_network_image: ^3.3.1
   flutter:
     sdk: flutter
-  flutter_svg: ^2.0.9
-  logger: ^2.0.2+1
+  flutter_svg: ^2.0.10+1
+  logger: ^2.2.0
 
 dev_dependencies:
-  flutter_lints: ^2.0.3
+  flutter_lints: ^3.0.2
   flutter_test:
     sdk: flutter
 
