@@ -131,7 +131,9 @@ class AVSImage extends StatelessWidget {
   }
 
   Widget _buildLocalSVG() {
-    return gradient == null ? _buildLocalSVGNoGradient() : _buildLocalSVGWithGradient();
+    return gradient == null
+        ? _buildLocalSVGNoGradient()
+        : _buildLocalSVGWithGradient();
   }
 
   Widget _buildLocalSVGNoGradient() {
@@ -146,7 +148,8 @@ class AVSImage extends StatelessWidget {
         height: height,
         width: width,
         fit: _defaultFit,
-        colorFilter: color == null ? null : ColorFilter.mode(color!, BlendMode.srcIn),
+        colorFilter:
+            color == null ? null : ColorFilter.mode(color!, BlendMode.srcIn),
         alignment: alignment,
       ),
     );
@@ -160,7 +163,8 @@ class AVSImage extends StatelessWidget {
               ? BorderRadius.zero
               : BorderRadius.circular(radius!),
       child: _SVGLinearGradientMask(
-        gradient: gradient ?? const LinearGradient(colors: [Colors.black, Colors.black26]),
+        gradient: gradient ??
+            const LinearGradient(colors: [Colors.black, Colors.black26]),
         child: SvgPicture.asset(
           url,
           height: height,
@@ -174,7 +178,9 @@ class AVSImage extends StatelessWidget {
   }
 
   Widget _buildNetworkSVG() {
-    return gradient == null ? _buildNetworkSVGNoGradient() : _buildNetworkSVGWithGradient();
+    return gradient == null
+        ? _buildNetworkSVGNoGradient()
+        : _buildNetworkSVGWithGradient();
   }
 
   Widget _buildNetworkSVGNoGradient() {
@@ -189,7 +195,8 @@ class AVSImage extends StatelessWidget {
         height: height,
         width: width,
         fit: _defaultFit,
-        colorFilter: color == null ? null : ColorFilter.mode(color!, BlendMode.srcIn),
+        colorFilter:
+            color == null ? null : ColorFilter.mode(color!, BlendMode.srcIn),
         alignment: alignment,
       ),
     );
@@ -203,7 +210,8 @@ class AVSImage extends StatelessWidget {
               ? BorderRadius.zero
               : BorderRadius.circular(radius!),
       child: _SVGLinearGradientMask(
-        gradient: gradient ?? const LinearGradient(colors: [Colors.black, Colors.black26]),
+        gradient: gradient ??
+            const LinearGradient(colors: [Colors.black, Colors.black26]),
         child: SvgPicture.network(
           url,
           height: height,
@@ -239,7 +247,9 @@ class AVSImage extends StatelessWidget {
   }
 
   Widget _buildNetworkImage() {
-    return cachedImage == true ? _buildNetworkImageWithCache() : _buildNetworkImageNoCache();
+    return cachedImage == true
+        ? _buildNetworkImageWithCache()
+        : _buildNetworkImageNoCache();
   }
 
   Widget _buildNetworkImageNoCache() {
@@ -279,7 +289,8 @@ class AVSImage extends StatelessWidget {
         fit: _defaultFit,
         maxHeightDiskCache: 3000,
         color: color,
-        progressIndicatorBuilder: showProgressIndicator ? _buildProgressIndicator : null,
+        progressIndicatorBuilder:
+            showProgressIndicator ? _buildProgressIndicator : null,
         errorWidget: (context, url, error) {
           _showLog("Network Image With Cache Exploded: $url");
 
@@ -319,7 +330,12 @@ ImageProvider AVSImageProvider(
   bool isLocalPosition = _isLocalImageCheck(path);
 
   if (isSvg) {
-    return AVSSVGProvider(path, color: color, scale: scale, height: height, width: width, gradient: gradient);
+    return AVSSVGProvider(path,
+        color: color,
+        scale: scale,
+        height: height,
+        width: width,
+        gradient: gradient);
   } else if (isSvg == false && isLocalPosition) {
     return AssetImage(path);
   } else if (isSvg == false && !isLocalPosition) {
