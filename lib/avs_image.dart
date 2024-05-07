@@ -1,10 +1,12 @@
 library avs_image;
 
+import 'package:avs_image/avs_image_gallery.dart';
 import 'package:avs_svg_provider/avs_svg_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:logger/logger.dart';
+
 part 'components/_svg_gradient_mask.dart';
 part 'functions/_check_local.dart';
 part 'functions/_check_svg.dart';
@@ -29,8 +31,8 @@ class AVSImage extends StatelessWidget {
 
   /// Image radius.
   ///
-  /// Default 0
-  final double? radius;
+  /// Default BorderRadius.zero
+  final BorderRadiusGeometry? radius;
 
   /// Image isCircle.
   ///
@@ -68,6 +70,10 @@ class AVSImage extends StatelessWidget {
   /// Default true
   final bool showProgressIndicator;
 
+  /// Default false
+  ///
+  final bool zoom;
+
   final bool showProgressImage;
 
   final bool isSvg;
@@ -87,6 +93,7 @@ class AVSImage extends StatelessWidget {
     this.alignment = Alignment.center,
     this.fit = BoxFit.contain,
     this.isCircle,
+    this.zoom = false,
     this.errorImgWidget,
     this.cachedImage = true,
     this.showProgressIndicator = true,
@@ -105,11 +112,27 @@ class AVSImage extends StatelessWidget {
           width: width,
           child: AspectRatio(
             aspectRatio: 1,
-            child: _buildBody(),
+            child: zoom
+                ? InkWell(
+                    onTap: () {
+                      debugPrint("Tapped");
+                      AVSImageGallery(context, imagePaths: [url]).show();
+                    },
+                    child: _buildBody(),
+                  )
+                : _buildBody(),
           ),
         );
       } else {
-        return _buildBody();
+        return zoom
+            ? InkWell(
+                onTap: () {
+                  debugPrint("Tapped");
+                  AVSImageGallery(context, imagePaths: [url]).show();
+                },
+                child: _buildBody(),
+              )
+            : _buildBody();
       }
     } else {
       return _buildErrorWidget(context);
@@ -140,9 +163,7 @@ class AVSImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: isCircle == true
           ? BorderRadius.circular(360)
-          : radius == null
-              ? BorderRadius.zero
-              : BorderRadius.circular(radius!),
+          : radius ?? BorderRadius.zero,
       child: SvgPicture.asset(
         url,
         height: height,
@@ -159,9 +180,7 @@ class AVSImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: isCircle == true
           ? BorderRadius.circular(360)
-          : radius == null
-              ? BorderRadius.zero
-              : BorderRadius.circular(radius!),
+          : radius ?? BorderRadius.zero,
       child: _SVGLinearGradientMask(
         gradient: gradient ??
             const LinearGradient(colors: [Colors.black, Colors.black26]),
@@ -187,9 +206,7 @@ class AVSImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: isCircle == true
           ? BorderRadius.circular(360)
-          : radius == null
-              ? BorderRadius.zero
-              : BorderRadius.circular(radius!),
+          : radius ?? BorderRadius.zero,
       child: SvgPicture.network(
         url,
         height: height,
@@ -206,9 +223,7 @@ class AVSImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: isCircle == true
           ? BorderRadius.circular(360)
-          : radius == null
-              ? BorderRadius.zero
-              : BorderRadius.circular(radius!),
+          : radius ?? BorderRadius.zero,
       child: _SVGLinearGradientMask(
         gradient: gradient ??
             const LinearGradient(colors: [Colors.black, Colors.black26]),
@@ -228,9 +243,7 @@ class AVSImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: isCircle == true
           ? BorderRadius.circular(360)
-          : radius == null
-              ? BorderRadius.zero
-              : BorderRadius.circular(radius!),
+          : radius ?? BorderRadius.zero,
       child: Image.asset(
         url,
         color: color,
@@ -256,9 +269,7 @@ class AVSImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: isCircle == true
           ? BorderRadius.circular(360)
-          : radius == null
-              ? BorderRadius.zero
-              : BorderRadius.circular(radius!),
+          : radius ?? BorderRadius.zero,
       child: Image.network(
         url,
         color: color,
@@ -278,9 +289,7 @@ class AVSImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: isCircle == true
           ? BorderRadius.circular(360)
-          : radius == null
-              ? BorderRadius.zero
-              : BorderRadius.circular(radius!),
+          : radius ?? BorderRadius.zero,
       child: CachedNetworkImage(
         imageUrl: url,
         height: height,

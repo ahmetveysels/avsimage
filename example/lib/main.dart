@@ -1,4 +1,5 @@
 import 'package:avs_image/avs_image.dart';
+import 'package:avs_image/avs_image_gallery.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -46,10 +47,27 @@ class HomePage extends StatelessWidget {
             //   ),
             // ),
             // const SizedBox(height: 30),
+            TextButton(
+              onPressed: () {
+                AVSImageGallery(
+                  context,
+                  imagePaths: [
+                    "assets/image1.png",
+                    "assets/image2.png",
+                    "assets/image3.png",
+                    "assets/image4.png",
+                    "assets/image5.png",
+                  ],
+                ).show();
+              },
+              child: const Text("Open Gallery"),
+            ),
+
             AVSImage(
-              "https://cdnuploads.aa.com.tr/uploads/Contents/2020/07/19/thumbs_b_c_24ab0f37a2ebc9b694d4c1fceeb2171c.jpg?v=130117",
-              radius: 20,
+              "https://cdnuploads.aa.com.tr/uploads/Contents/2020/07/19/thumbs_b_c_24ab0f37a2ebc9b694d4c1fceeb2171c.jpg?v=13011",
+              radius: BorderRadius.circular(20),
               height: 200,
+              zoom: true,
               alignment: Alignment.center,
               errorImgWidget: const Icon(
                 Icons.error,

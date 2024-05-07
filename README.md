@@ -2,12 +2,19 @@
 
 AVSImage package. A Flutter package that you can get and use images from local and network. Keep your images in the cache directory. You can also use your SVG files with this package. Gradient color SVG is supported. All in one and easy to use.
 
-AVSImageProvider added. With this function you can easily use images and svg files as ImageProvider.
+- With AVSImageProvider you can easily use images and svg files as ImageProvider.
 
-## Features
+- With AVSImageGallery you can show your images as a gallery.
+ 
 
-![Screenshot](https://ahmetveysel.com/flutterpackages/avsimage/screenshot.png)
+## 👍 Like us on [pub.dev](https://pub.dev/packages/avs_image) to support us!
 
+## What's new? v1.1.2
+
+- AVSImage 'zoom' property added.
+
+- AVSImageGallery added. With this you can show your pictures like a gallery.
+ 
 ## Getting started
 
 No permission is needed.
@@ -62,7 +69,26 @@ Container(
 ),
 ```
 
+Use AVSImageGallery
+```dart
+TextButton(
+    onPressed: () {
+        AVSImageGallery(context, imagePaths: [
+            "assets/images/1.jpg",
+            "assets/images/2.jpg",
+            "assets/images/3.jpg",
+            "assets/images/4.jpg",
+        ]).show();
+    },
+    child: const Text("Open Gallery"),
+),
+```
+
  
+
+## ScreenShot
+
+![Screenshot](https://ahmetveysel.com/flutterpackages/avsimage/screenshot.png)
 
 
 

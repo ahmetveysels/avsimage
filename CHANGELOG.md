@@ -1,3 +1,9 @@
+## 1.1.2 Yapılacaklar
+
+- double radius changing BorderRadiusGeometry.
+- zoom propery added
+- AVSImageGallery added.
+
 ## 1.1.1
 
 * Fix version
