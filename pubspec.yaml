@@ -2,7 +2,6 @@ name: avs_image
 description: "A Flutter package that you can get and use images and SVG from
   local and network . Image - SVG Provider Supported"
 topics:
-  - cache
   - image
   - network-image
   - svg-provider
