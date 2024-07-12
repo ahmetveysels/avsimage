@@ -1,4 +1,12 @@
-## 1.1.2 Yapılacaklar
+## 1.1.3
+
+- Added onTap feature to AVSImage
+- Added backgroundColor and backgroundGradient property to AVSImageGallery
+- Added zoomStyle to AVSImage. Select zoom on type. 'onTap, onDoubleTap, onLongPress'
+- Replaced default progressWidget with CircularProgressIndicator.adaptive.
+- added progressIndicatorWidget property. With this property you can create custom progress widget.
+
+## 1.1.2
 
 - double radius changing BorderRadiusGeometry.
 - zoom propery added

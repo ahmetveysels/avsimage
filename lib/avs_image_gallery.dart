@@ -11,6 +11,8 @@ class AVSImageGallery {
   final bool? lastSwipeClose;
   final Function(int index)? onSwipe;
   final bool showBottomBar;
+  final Color? backgroundColor;
+  final LinearGradient? backgroundGradient;
 
   AVSImageGallery(
     this.context, {
@@ -20,6 +22,8 @@ class AVSImageGallery {
     this.lastSwipeClose,
     this.onSwipe,
     this.showBottomBar = true,
+    this.backgroundColor,
+    this.backgroundGradient,
   });
 
   Future<void> show() async {
@@ -33,8 +37,10 @@ class AVSImageGallery {
         builder: (context, setState) {
           return Material(
             color: Colors.transparent,
-            child: ColoredBox(
-              color: Colors.black.withOpacity(opacity),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: backgroundColor ?? Colors.black.withOpacity(opacity),
+                  gradient: backgroundGradient),
               child: SafeArea(
                 child: Stack(
                   alignment: Alignment.center,

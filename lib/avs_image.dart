@@ -1,5 +1,7 @@
 library avs_image;
 
+import 'dart:io';
+
 import 'package:avs_image/avs_image_gallery.dart';
 import 'package:avs_svg_provider/avs_svg_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -10,6 +12,8 @@ import 'package:logger/logger.dart';
 part 'components/_svg_gradient_mask.dart';
 part 'functions/_check_local.dart';
 part 'functions/_check_svg.dart';
+
+enum ZoomStyle { onTap, onDoubleTap, onLongPress }
 
 class AVSImage extends StatelessWidget {
   /// Image Url or Path
@@ -74,7 +78,16 @@ class AVSImage extends StatelessWidget {
   ///
   final bool zoom;
 
-  final bool showProgressImage;
+  //Image zoom start style. Default onTap
+  final ZoomStyle zoomStyle;
+
+  /// Image On Tap. if this is not null and zoomStyle.onTap then zoom is false
+  ///
+  final Function()? onTap;
+
+  /// Loading Progress Indicator
+  ///
+  final Widget? progressIndicatorWidget;
 
   final bool isSvg;
 
@@ -90,6 +103,7 @@ class AVSImage extends StatelessWidget {
     this.color,
     this.radius,
     this.gradient,
+    this.zoomStyle = ZoomStyle.onTap,
     this.alignment = Alignment.center,
     this.fit = BoxFit.contain,
     this.isCircle,
@@ -97,7 +111,8 @@ class AVSImage extends StatelessWidget {
     this.errorImgWidget,
     this.cachedImage = true,
     this.showProgressIndicator = true,
-    this.showProgressImage = true,
+    this.onTap,
+    this.progressIndicatorWidget,
   })  : isSvg = _isSvgCheck(path),
         isLocalPosition = _isLocalImageCheck(path),
         url = path,
@@ -112,30 +127,44 @@ class AVSImage extends StatelessWidget {
           width: width,
           child: AspectRatio(
             aspectRatio: 1,
-            child: zoom
-                ? InkWell(
-                    onTap: () {
-                      debugPrint("Tapped");
-                      AVSImageGallery(context, imagePaths: [url]).show();
-                    },
-                    child: _buildBody(),
-                  )
-                : _buildBody(),
+            child: ClipRRect(
+              borderRadius: isCircle == true
+                  ? BorderRadius.circular(360)
+                  : radius ?? BorderRadius.zero,
+              child: GestureDetector(
+                onTap: () async => _onTapFunction(context),
+                onLongPress: () async => _onLongPressFunction(context),
+                onDoubleTap: () async => onDoubleTapFunction(context),
+                child: _buildBody(),
+              ),
+            ),
           ),
         );
       } else {
-        return zoom
-            ? InkWell(
-                onTap: () {
-                  debugPrint("Tapped");
-                  AVSImageGallery(context, imagePaths: [url]).show();
-                },
-                child: _buildBody(),
-              )
-            : _buildBody();
+        return ClipRRect(
+          borderRadius: isCircle == true
+              ? BorderRadius.circular(360)
+              : radius ?? BorderRadius.zero,
+          child: GestureDetector(
+            onTap: () async => _onTapFunction(context),
+            onLongPress: () async => _onLongPressFunction(context),
+            onDoubleTap: () async => onDoubleTapFunction(context),
+            child: _buildBody(),
+          ),
+        );
       }
     } else {
-      return _buildErrorWidget(context);
+      return ClipRRect(
+        borderRadius: isCircle == true
+            ? BorderRadius.circular(360)
+            : radius ?? BorderRadius.zero,
+        child: GestureDetector(
+          onTap: () async => _onTapFunction(context),
+          onLongPress: () async => _onLongPressFunction(context),
+          onDoubleTap: () async => onDoubleTapFunction(context),
+          child: _buildErrorWidget(context),
+        ),
+      );
     }
   }
 
@@ -277,6 +306,20 @@ class AVSImage extends StatelessWidget {
         width: width,
         fit: _defaultFit,
         alignment: alignment,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) {
+            return child;
+          } else {
+            return showProgressIndicator
+                ? _buildProgressIndicator(
+                    ((loadingProgress.cumulativeBytesLoaded) /
+                                (loadingProgress.expectedTotalBytes ?? 1))
+                            .toDouble() *
+                        100.toDouble(),
+                  )
+                : const SizedBox();
+          }
+        },
         errorBuilder: (context, error, stackTrace) {
           _showLog("Network Image NoCache Exploded: $url");
           return _buildErrorWidget(context);
@@ -298,8 +341,10 @@ class AVSImage extends StatelessWidget {
         fit: _defaultFit,
         maxHeightDiskCache: 3000,
         color: color,
-        progressIndicatorBuilder:
-            showProgressIndicator ? _buildProgressIndicator : null,
+        progressIndicatorBuilder: (context, url, progress) =>
+            showProgressIndicator
+                ? _buildProgressIndicator(progress.downloaded.toDouble())
+                : const SizedBox(),
         errorWidget: (context, url, error) {
           _showLog("Network Image With Cache Exploded: $url");
 
@@ -309,11 +354,18 @@ class AVSImage extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressIndicator(context, a, b) => Center(
-        child: CircularProgressIndicator(
-          value: b.downloaded.toDouble(),
-        ),
-      );
+  Widget _buildProgressIndicator(double val) {
+    return SizedBox(
+      height: height,
+      width: width,
+      child: Center(
+        child: progressIndicatorWidget ??
+            CircularProgressIndicator.adaptive(
+              value: Platform.isAndroid ? val : null,
+            ),
+      ),
+    );
+  }
 
   Widget _buildErrorWidget(context) {
     return errorImgWidget == null
@@ -323,6 +375,36 @@ class AVSImage extends StatelessWidget {
             color: Colors.red,
           )
         : errorImgWidget!;
+  }
+
+  void _zoomFunc(BuildContext context, String img) {
+    AVSImageGallery(context, imagePaths: [img]).show();
+  }
+
+  Future<void>? _onTapFunction(BuildContext context) async {
+    if (onTap != null) {
+      onTap!();
+    } else if (zoomStyle == ZoomStyle.onTap && zoom == true) {
+      _zoomFunc(context, url);
+    } else {
+      return;
+    }
+  }
+
+  Future<void>? _onLongPressFunction(BuildContext context) async {
+    if (zoomStyle == ZoomStyle.onLongPress && zoom == true) {
+      _zoomFunc(context, url);
+    } else {
+      return;
+    }
+  }
+
+  Future<void>? onDoubleTapFunction(BuildContext context) async {
+    if (zoomStyle == ZoomStyle.onDoubleTap && zoom == true) {
+      _zoomFunc(context, url);
+    } else {
+      return;
+    }
   }
 }
 

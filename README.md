@@ -9,11 +9,17 @@ AVSImage package. A Flutter package that you can get and use images from local a
 
 ## 👍 Like us on [pub.dev](https://pub.dev/packages/avs_image) to support us!
 
-## What's new? v1.1.2
+## What's new? v1.1.3
 
-- AVSImage 'zoom' property added.
-
-- AVSImageGallery added. With this you can show your pictures like a gallery.
+- Added onTap feature to AVSImage
+  
+- Added backgroundColor and backgroundGradient property to AVSImageGallery
+  
+- Added zoomStyle to AVSImage. Select zoom on type. 'onTap, onDoubleTap, onLongPress'
+  
+- Replaced default progressWidget with CircularProgressIndicator.adaptive.  
+  
+- Added progressIndicatorWidget property. With this property you can create custom progress widget.
  
 ## Getting started
 

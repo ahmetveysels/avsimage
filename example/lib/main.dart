@@ -47,8 +47,27 @@ class HomePage extends StatelessWidget {
             //   ),
             // ),
             // const SizedBox(height: 30),
-            TextButton(
-              onPressed: () {
+
+            // TextButton(
+            //   onPressed: () {
+            //     AVSImageGallery(
+            //       context,
+            //       imagePaths: [
+            //         "assets/image1.png",
+            //         "assets/image2.png",
+            //         "assets/image3.png",
+            //         "assets/image4.png",
+            //         "assets/image5.png",
+            //       ],
+            //     ).show();
+            //   },
+            //   child: const Text("Open Gallery"),
+            // ),
+
+            AVSImage(
+              "https://images.pexels.com/photos/378570/pexels-photo-378570.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+              radius: BorderRadius.circular(20),
+              onTap: () {
                 AVSImageGallery(
                   context,
                   imagePaths: [
@@ -58,17 +77,22 @@ class HomePage extends StatelessWidget {
                     "assets/image4.png",
                     "assets/image5.png",
                   ],
+                  initialIndex: 2,
+                  backgroundColor: Colors.red,
+                  backgroundGradient: const LinearGradient(
+                    colors: [Colors.blue, Color.fromARGB(255, 176, 200, 91)],
+                    tileMode: TileMode.clamp,
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                  ),
                 ).show();
               },
-              child: const Text("Open Gallery"),
-            ),
-
-            AVSImage(
-              "https://cdnuploads.aa.com.tr/uploads/Contents/2020/07/19/thumbs_b_c_24ab0f37a2ebc9b694d4c1fceeb2171c.jpg?v=13011",
-              radius: BorderRadius.circular(20),
               height: 200,
               zoom: true,
+              cachedImage: false,
+              zoomStyle: ZoomStyle.onDoubleTap,
               alignment: Alignment.center,
+              progressIndicatorWidget: const Text("loading..."),
               errorImgWidget: const Icon(
                 Icons.error,
                 color: Colors.red,
