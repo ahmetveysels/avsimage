@@ -9,9 +9,13 @@ AVSImage package. A Flutter package that you can get and use images from local a
 
 ## 👍 Like us on [pub.dev](https://pub.dev/packages/avs_image) to support us!
 
-## What's new? v1.1.3
+## What's new? v1.1.4
 
 - Added onTap feature to AVSImage
+
+- Added onLongPress feature to AVSImage
+
+- Added onDoubleTap feature to AVSImage
   
 - Added backgroundColor and backgroundGradient property to AVSImageGallery
   

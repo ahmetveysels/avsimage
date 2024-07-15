@@ -1,3 +1,8 @@
+## 1.1.4
+
+- onLongPress function added
+- onDoubleTap function added
+
 ## 1.1.3
 
 - Added onTap feature to AVSImage
