@@ -1,3 +1,7 @@
+## 1.1.5
+
+- FixedOn Tap Error
+
 ## 1.1.4
 
 - onLongPress function added
