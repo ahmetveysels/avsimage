@@ -1,3 +1,7 @@
+## 1.1.6
+
+- File Image supported
+
 ## 1.1.5
 
 - FixedOn Tap Error

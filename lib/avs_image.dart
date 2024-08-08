@@ -13,6 +13,8 @@ part 'components/_svg_gradient_mask.dart';
 part 'functions/_check_local.dart';
 part 'functions/_check_svg.dart';
 
+enum AVSImageType { network, asset, file }
+
 enum ZoomStyle { onTap, onDoubleTap, onLongPress }
 
 class AVSImage extends StatelessWidget {
@@ -99,7 +101,7 @@ class AVSImage extends StatelessWidget {
 
   final bool isSvg;
 
-  final bool isLocalPosition;
+  final AVSImageType imageType;
 
   final BoxFit _defaultFit;
 
@@ -124,7 +126,7 @@ class AVSImage extends StatelessWidget {
     this.onLongPress,
     this.progressIndicatorWidget,
   })  : isSvg = _isSvgCheck(path),
-        isLocalPosition = _isLocalImageCheck(path),
+        imageType = _getImageType(path),
         url = path,
         _defaultFit = isCircle == true ? BoxFit.cover : fit;
 
@@ -152,9 +154,9 @@ class AVSImage extends StatelessWidget {
         return ClipRRect(
           borderRadius: isCircle == true ? BorderRadius.circular(360) : radius ?? BorderRadius.zero,
           child: GestureDetector(
-          onTap: (onTap == null && zoom == false) ? null : () async => _onTapFunction(context),
-                onLongPress: (onLongPress == null && zoom == false) ? null : () async => _onLongPressFunction(context),
-                onDoubleTap: (onDoubleTap == null && zoom == false) ? null : () async => onDoubleTapFunction(context),
+            onTap: (onTap == null && zoom == false) ? null : () async => _onTapFunction(context),
+            onLongPress: (onLongPress == null && zoom == false) ? null : () async => _onLongPressFunction(context),
+            onDoubleTap: (onDoubleTap == null && zoom == false) ? null : () async => onDoubleTapFunction(context),
             child: _buildBody(),
           ),
         );
@@ -163,9 +165,9 @@ class AVSImage extends StatelessWidget {
       return ClipRRect(
         borderRadius: isCircle == true ? BorderRadius.circular(360) : radius ?? BorderRadius.zero,
         child: GestureDetector(
-       onTap: (onTap == null && zoom == false) ? null : () async => _onTapFunction(context),
-                onLongPress: (onLongPress == null && zoom == false) ? null : () async => _onLongPressFunction(context),
-                onDoubleTap: (onDoubleTap == null && zoom == false) ? null : () async => onDoubleTapFunction(context),
+          onTap: (onTap == null && zoom == false) ? null : () async => _onTapFunction(context),
+          onLongPress: (onLongPress == null && zoom == false) ? null : () async => _onLongPressFunction(context),
+          onDoubleTap: (onDoubleTap == null && zoom == false) ? null : () async => onDoubleTapFunction(context),
           child: _buildErrorWidget(context),
         ),
       );
@@ -173,20 +175,22 @@ class AVSImage extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    if (isSvg && isLocalPosition) {
-      return _buildLocalSVG();
-    } else if (isSvg && !isLocalPosition) {
+    if (isSvg && imageType == AVSImageType.asset) {
+      return _buildAssetSVG();
+    } else if (isSvg && imageType == AVSImageType.network) {
       return _buildNetworkSVG();
-    } else if (isSvg == false && isLocalPosition) {
-      return _buildLocalImage();
-    } else if (isSvg == false && !isLocalPosition) {
+    } else if (isSvg == false && imageType == AVSImageType.asset) {
+      return _buildAssetImage();
+    } else if (isSvg == false && imageType == AVSImageType.network) {
       return _buildNetworkImage();
+    } else if (isSvg == false && imageType == AVSImageType.file) {
+      return _buildFileImage();
     } else {
       return Container();
     }
   }
 
-  Widget _buildLocalSVG() {
+  Widget _buildAssetSVG() {
     return gradient == null ? _buildLocalSVGNoGradient() : _buildLocalSVGWithGradient();
   }
 
@@ -256,7 +260,7 @@ class AVSImage extends StatelessWidget {
     );
   }
 
-  Widget _buildLocalImage() {
+  Widget _buildAssetImage() {
     return ClipRRect(
       borderRadius: isCircle == true ? BorderRadius.circular(360) : radius ?? BorderRadius.zero,
       child: Image.asset(
@@ -328,6 +332,21 @@ class AVSImage extends StatelessWidget {
     );
   }
 
+  Widget _buildFileImage() {
+    return Image.file(
+      File(url),
+      color: color,
+      height: height,
+      width: width,
+      fit: _defaultFit,
+      alignment: alignment,
+      errorBuilder: (context, error, stackTrace) {
+        _showLog("Local Image Exploded: $url");
+        return _buildErrorWidget(context);
+      },
+    );
+  }
+
   Widget _buildProgressIndicator(double val) {
     return SizedBox(
       height: height,
@@ -390,7 +409,7 @@ ImageProvider AVSImageProvider(
   LinearGradient? gradient,
 }) {
   bool isSvg = _isSvgCheck(path);
-  bool isLocalPosition = _isLocalImageCheck(path);
+  bool isLocalPosition = _getImageType(path) == AVSImageType.network ? false : true;
 
   if (isSvg) {
     return AVSSVGProvider(path, color: color, scale: scale, height: height, width: width, gradient: gradient);
