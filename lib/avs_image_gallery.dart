@@ -44,7 +44,9 @@ class AVSImageGallery {
           return Material(
             color: Colors.transparent,
             child: Container(
-              decoration: BoxDecoration(color: backgroundColor ?? Colors.black.withOpacity(opacity), gradient: backgroundGradient),
+              decoration: BoxDecoration(
+                  color: backgroundColor ?? Colors.black.withOpacity(opacity),
+                  gradient: backgroundGradient),
               child: SafeArea(
                 child: Stack(
                   alignment: Alignment.center,
@@ -52,7 +54,8 @@ class AVSImageGallery {
                   children: [
                     PageView.builder(
                       itemCount: imagePaths.length + 1,
-                      controller: PageController(initialPage: initialIndex ?? 0),
+                      controller:
+                          PageController(initialPage: initialIndex ?? 0),
                       onPageChanged: (index) {
                         if (index == imagePaths.length) {
                           Navigator.of(context).pop();
@@ -82,10 +85,30 @@ class AVSImageGallery {
                     ),
                     showCloseButton == true
                         ? Positioned(
-                            top: closeButtonPosition == CloseButtonPosition.topLeft || closeButtonPosition == CloseButtonPosition.topRight ? 20 : null,
-                            right: closeButtonPosition == CloseButtonPosition.topRight || closeButtonPosition == CloseButtonPosition.bottomRight ? 20 : null,
-                            bottom: closeButtonPosition == CloseButtonPosition.bottomLeft || closeButtonPosition == CloseButtonPosition.bottomRight ? 20 : null,
-                            left: closeButtonPosition == CloseButtonPosition.topLeft || closeButtonPosition == CloseButtonPosition.bottomLeft ? 20 : null,
+                            top: closeButtonPosition ==
+                                        CloseButtonPosition.topLeft ||
+                                    closeButtonPosition ==
+                                        CloseButtonPosition.topRight
+                                ? 20
+                                : null,
+                            right: closeButtonPosition ==
+                                        CloseButtonPosition.topRight ||
+                                    closeButtonPosition ==
+                                        CloseButtonPosition.bottomRight
+                                ? 20
+                                : null,
+                            bottom: closeButtonPosition ==
+                                        CloseButtonPosition.bottomLeft ||
+                                    closeButtonPosition ==
+                                        CloseButtonPosition.bottomRight
+                                ? 20
+                                : null,
+                            left: closeButtonPosition ==
+                                        CloseButtonPosition.topLeft ||
+                                    closeButtonPosition ==
+                                        CloseButtonPosition.bottomLeft
+                                ? 20
+                                : null,
                             child: InkWell(
                               onTap: () {
                                 Navigator.of(context).pop();
@@ -93,7 +116,8 @@ class AVSImageGallery {
                               child: customCloseButton ??
                                   Container(
                                     padding: const EdgeInsets.all(10),
-                                    child: const Icon(Icons.close, color: Colors.white),
+                                    child: const Icon(Icons.close,
+                                        color: Colors.white),
                                   ),
                             ),
                           )
@@ -111,7 +135,9 @@ class AVSImageGallery {
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
-                                  return activeIndex == index ? activeSlideWidget(opacity: opacity) : inActiveSlideWidget(opacity: opacity);
+                                  return activeIndex == index
+                                      ? activeSlideWidget(opacity: opacity)
+                                      : inActiveSlideWidget(opacity: opacity);
                                 },
                               ),
                             ),
@@ -127,7 +153,9 @@ class AVSImageGallery {
   }
 
   Widget activeSlideWidget({required double opacity}) {
-    return (imageGalleryStyle?.activeSlideIcon ?? "").isNotEmpty ? activeCustomWidgetSlideWidget(opacity: opacity) : activeDefaultSlideWidget(opacity: opacity);
+    return (imageGalleryStyle?.activeSlideIcon ?? "").isNotEmpty
+        ? activeCustomWidgetSlideWidget(opacity: opacity)
+        : activeDefaultSlideWidget(opacity: opacity);
   }
 
   Widget activeDefaultSlideWidget({required double opacity}) {
@@ -158,7 +186,9 @@ class AVSImageGallery {
   }
 
   Widget inActiveSlideWidget({required double opacity}) {
-    return (imageGalleryStyle?.inActiveSlideIcon ?? "").isNotEmpty ? inActiveCustomWidgetSlideWidget(opacity: opacity) : inActiveDefaultSlideWidget(opacity: opacity);
+    return (imageGalleryStyle?.inActiveSlideIcon ?? "").isNotEmpty
+        ? inActiveCustomWidgetSlideWidget(opacity: opacity)
+        : inActiveDefaultSlideWidget(opacity: opacity);
   }
 
   Widget inActiveDefaultSlideWidget({required double opacity}) {
