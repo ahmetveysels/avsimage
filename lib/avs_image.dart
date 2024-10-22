@@ -1,5 +1,3 @@
-library avs_image;
-
 import 'dart:io';
 
 import 'package:avs_image/avs_image_gallery.dart';
@@ -14,6 +12,8 @@ part 'functions/_check_local.dart';
 part 'functions/_check_svg.dart';
 
 enum AVSImageType { network, asset, file }
+
+enum CloseButtonPosition { topRight, topLeft, bottomRight, bottomLeft }
 
 enum ZoomStyle { onTap, onDoubleTap, onLongPress }
 

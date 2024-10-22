@@ -1,3 +1,10 @@
+## 1.1.7
+
+- Slidebar is hidden if the element of the my list is less than 2.
+- Customize closeButtonPosition
+- customCloseButton Added
+- customize slide widget with 'imageGalleryStyle' property
+
 ## 1.1.6
 
 - File Image supported

@@ -13,6 +13,9 @@ class AVSImageGallery {
   final bool showBottomBar;
   final Color? backgroundColor;
   final LinearGradient? backgroundGradient;
+  final CloseButtonPosition closeButtonPosition;
+  final Widget? customCloseButton;
+  final ImageGalleryStyle? imageGalleryStyle;
 
   AVSImageGallery(
     this.context, {
@@ -24,6 +27,9 @@ class AVSImageGallery {
     this.showBottomBar = true,
     this.backgroundColor,
     this.backgroundGradient,
+    this.closeButtonPosition = CloseButtonPosition.topRight,
+    this.customCloseButton,
+    this.imageGalleryStyle,
   });
 
   Future<void> show() async {
@@ -38,9 +44,7 @@ class AVSImageGallery {
           return Material(
             color: Colors.transparent,
             child: Container(
-              decoration: BoxDecoration(
-                  color: backgroundColor ?? Colors.black.withOpacity(opacity),
-                  gradient: backgroundGradient),
+              decoration: BoxDecoration(color: backgroundColor ?? Colors.black.withOpacity(opacity), gradient: backgroundGradient),
               child: SafeArea(
                 child: Stack(
                   alignment: Alignment.center,
@@ -48,8 +52,7 @@ class AVSImageGallery {
                   children: [
                     PageView.builder(
                       itemCount: imagePaths.length + 1,
-                      controller:
-                          PageController(initialPage: initialIndex ?? 0),
+                      controller: PageController(initialPage: initialIndex ?? 0),
                       onPageChanged: (index) {
                         if (index == imagePaths.length) {
                           Navigator.of(context).pop();
@@ -79,40 +82,36 @@ class AVSImageGallery {
                     ),
                     showCloseButton == true
                         ? Positioned(
-                            top: 20,
-                            right: 20,
-                            child: IconButton(
-                              onPressed: () => Navigator.pop(context),
-                              icon:
-                                  const Icon(Icons.close, color: Colors.white),
+                            top: closeButtonPosition == CloseButtonPosition.topLeft || closeButtonPosition == CloseButtonPosition.topRight ? 20 : null,
+                            right: closeButtonPosition == CloseButtonPosition.topRight || closeButtonPosition == CloseButtonPosition.bottomRight ? 20 : null,
+                            bottom: closeButtonPosition == CloseButtonPosition.bottomLeft || closeButtonPosition == CloseButtonPosition.bottomRight ? 20 : null,
+                            left: closeButtonPosition == CloseButtonPosition.topLeft || closeButtonPosition == CloseButtonPosition.bottomLeft ? 20 : null,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: customCloseButton ??
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    child: const Icon(Icons.close, color: Colors.white),
+                                  ),
                             ),
                           )
                         : const SizedBox(),
 
                     // Bottom Bar
-                    showBottomBar == false
+                    showBottomBar == false || imagePaths.length < 2
                         ? const SizedBox()
                         : Positioned(
                             bottom: 20,
                             child: SizedBox(
-                              height: 9,
+                              height: imageGalleryStyle?.slideHeight ?? 9,
                               child: ListView.builder(
                                 itemCount: imagePaths.length,
                                 scrollDirection: Axis.horizontal,
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
-                                  return Container(
-                                    height: 9,
-                                    width: 9,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 2),
-                                    decoration: BoxDecoration(
-                                      color: activeIndex == index
-                                          ? Colors.white.withOpacity(opacity)
-                                          : Colors.grey.withOpacity(opacity),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  );
+                                  return activeIndex == index ? activeSlideWidget(opacity: opacity) : inActiveSlideWidget(opacity: opacity);
                                 },
                               ),
                             ),
@@ -125,5 +124,105 @@ class AVSImageGallery {
         },
       ),
     );
+  }
+
+  Widget activeSlideWidget({required double opacity}) {
+    return (imageGalleryStyle?.activeSlideIcon ?? "").isNotEmpty ? activeCustomWidgetSlideWidget(opacity: opacity) : activeDefaultSlideWidget(opacity: opacity);
+  }
+
+  Widget activeDefaultSlideWidget({required double opacity}) {
+    return Container(
+      height: imageGalleryStyle?.slideHeight ?? 9,
+      width: imageGalleryStyle?.slideWidth ?? 9,
+      margin: const EdgeInsets.symmetric(horizontal: 2),
+      decoration: BoxDecoration(
+        color: imageGalleryStyle?.activeSlideColor ?? Colors.white,
+        borderRadius: BorderRadius.circular(imageGalleryStyle?.radius ?? 360),
+      ),
+    );
+  }
+
+  Widget activeCustomWidgetSlideWidget({required double opacity}) {
+    return Container(
+      height: imageGalleryStyle?.slideHeight ?? 9,
+      width: imageGalleryStyle?.slideWidth ?? 9,
+      margin: const EdgeInsets.symmetric(horizontal: 2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(imageGalleryStyle?.radius ?? 360),
+      ),
+      child: AVSImage(
+        imageGalleryStyle?.activeSlideIcon ?? "",
+        color: imageGalleryStyle?.activeSlideColor ?? Colors.white,
+      ),
+    );
+  }
+
+  Widget inActiveSlideWidget({required double opacity}) {
+    return (imageGalleryStyle?.inActiveSlideIcon ?? "").isNotEmpty ? inActiveCustomWidgetSlideWidget(opacity: opacity) : inActiveDefaultSlideWidget(opacity: opacity);
+  }
+
+  Widget inActiveDefaultSlideWidget({required double opacity}) {
+    return Container(
+      height: imageGalleryStyle?.slideHeight ?? 9,
+      width: imageGalleryStyle?.slideWidth ?? 9,
+      margin: const EdgeInsets.symmetric(horizontal: 2),
+      decoration: BoxDecoration(
+        color: imageGalleryStyle?.inActiveSlideColor ?? Colors.grey[300],
+        borderRadius: BorderRadius.circular(imageGalleryStyle?.radius ?? 360),
+      ),
+    );
+  }
+
+  Widget inActiveCustomWidgetSlideWidget({required double opacity}) {
+    return Container(
+      height: imageGalleryStyle?.slideHeight ?? 9,
+      width: imageGalleryStyle?.slideWidth ?? 9,
+      margin: const EdgeInsets.symmetric(horizontal: 2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(imageGalleryStyle?.radius ?? 360),
+      ),
+      child: AVSImage(
+        imageGalleryStyle?.inActiveSlideIcon ?? "",
+        color: imageGalleryStyle?.inActiveSlideColor ?? Colors.grey[300],
+      ),
+    );
+  }
+}
+
+class ImageGalleryStyle {
+  /// Deault activeSlideColor is Colors.white
+  final Color? activeSlideColor;
+
+  /// Deault inActiveSlideColor is Colors.grey
+  final Color? inActiveSlideColor;
+
+  /// Deault slideWidth is 9
+  final double? slideWidth;
+
+  /// Deault slideHeight is 9
+  final double? slideHeight;
+
+  /// Deault activeSlideWidget is null
+  final String? activeSlideIcon;
+
+  /// Deault inActiveSlideWidget is null
+  final String? inActiveSlideIcon;
+
+  /// Deault radius is 360. It means circle use 360
+  final double? radius;
+
+  ImageGalleryStyle({
+    this.activeSlideColor,
+    this.inActiveSlideColor,
+    this.slideWidth,
+    this.slideHeight,
+    this.activeSlideIcon,
+    this.inActiveSlideIcon,
+    this.radius,
+  });
+
+  @override
+  String toString() {
+    return 'ImageGalleryStyle(activeSlideColor: $activeSlideColor, inActiveSlideColor: $inActiveSlideColor, slideWidth: $slideWidth, slideHeight: $slideHeight, activeSlideIcon: $activeSlideIcon, inActiveSlideIcon: $inActiveSlideIcon, radius: $radius)';
   }
 }
