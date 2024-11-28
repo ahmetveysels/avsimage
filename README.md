@@ -1,6 +1,6 @@
 # AVSImage
 
-AVSImage package. All in one. A Flutter package that you can get and use images from local and network. Keep your images in the cache directory. You can also use your SVG files with this package. Gradient color SVG is supported. All in one and easy to use.
+AVSImage package. ALL IN ONE! A Flutter package that you can get and use images from local and network. Keep your images in the cache directory. You can also use your SVG files with this package. Gradient color SVG is supported. All in one and easy to use.
 
 - With AVSImageProvider you can easily use images and svg files as ImageProvider.
 
@@ -9,19 +9,11 @@ AVSImage package. All in one. A Flutter package that you can get and use images 
 
 ## 👍 Like us on [pub.dev](https://pub.dev/packages/avs_image) to support us!
 
-## What's new? v1.1.7
+## What's new? v1.1.8
 
-- AVSImagaGallery share button supported.
+- AVSImagaGallery secondary Button supported
 - 
-- AVSImage if zoom: true share button supported.
-
-- Slidebar is hidden if the element of the my list is less than 2.
-- 
-- Customize closeButtonPosition
-- 
-- customCloseButton Added
-- 
-- customize slide widget with 'imageGalleryStyle' property
+- AVSImagaGallery  closeWithOnTap supported default false
  
 ## Getting started
 
