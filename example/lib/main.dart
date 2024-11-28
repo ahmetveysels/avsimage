@@ -36,18 +36,6 @@ class HomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              AVSImage(
-                "https://uzmanjew.odamobil.com/uploads/products/",
-                isCircle: true,
-                width: 200,
-                height: 200,
-                zoom: true,
-                alignment: Alignment.center,
-                errorImgWidget: const Icon(
-                  Icons.error,
-                  color: Colors.red,
-                ),
-              ),
               const SizedBox(height: 30),
 
               // TextButton(
@@ -133,9 +121,7 @@ class HomePage extends StatelessWidget {
                   color: Colors.grey[300],
                   image: DecorationImage(
                     fit: BoxFit.contain,
-                    image: AVSImageProvider(
-                        "https://www.svgrepo.com/show/530440/machine-vision.svg",
-                        scale: 9),
+                    image: AVSImageProvider("https://www.svgrepo.com/show/530440/machine-vision.svg", scale: 9),
                   ),
                 ),
                 child: const Text("SVG Image Provider"),
