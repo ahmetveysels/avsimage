@@ -131,7 +131,9 @@ class HomePage extends StatelessWidget {
                 color: Colors.grey[300],
                 image: DecorationImage(
                   fit: BoxFit.contain,
-                  image: AVSImageProvider("https://www.svgrepo.com/show/530440/machine-vision.svg", scale: 9),
+                  image: AVSImageProvider(
+                      "https://www.svgrepo.com/show/530440/machine-vision.svg",
+                      scale: 9),
                 ),
               ),
               child: const Text("SVG Image Provider"),
