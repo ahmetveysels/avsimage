@@ -8,13 +8,19 @@ class AVSImageGallery {
   final List<String> imagePaths;
   final int? initialIndex;
   final bool? showCloseButton;
+  final bool closeWithOnTap;
   final bool? lastSwipeClose;
   final Function(int index)? onSwipe;
   final bool showBottomBar;
   final Color? backgroundColor;
   final LinearGradient? backgroundGradient;
-  final CloseButtonPosition closeButtonPosition;
+  final ButtonPosition closeButtonPosition;
   final Widget? customCloseButton;
+
+  ///Secondary Button
+  final ButtonPosition secondaryButtonPosition;
+  final Widget? secondaryButton;
+
   final ImageGalleryStyle? imageGalleryStyle;
 
   AVSImageGallery(
@@ -26,10 +32,13 @@ class AVSImageGallery {
     this.onSwipe,
     this.showBottomBar = true,
     this.backgroundColor,
+    this.closeWithOnTap = false,
     this.backgroundGradient,
-    this.closeButtonPosition = CloseButtonPosition.topRight,
+    this.closeButtonPosition = ButtonPosition.topRight,
     this.customCloseButton,
     this.imageGalleryStyle,
+    this.secondaryButtonPosition = ButtonPosition.topLeft,
+    this.secondaryButton,
   });
 
   Future<void> show() async {
@@ -43,106 +52,93 @@ class AVSImageGallery {
         builder: (context, setState) {
           return Material(
             color: Colors.transparent,
-            child: Container(
-              decoration: BoxDecoration(
-                  color: backgroundColor ?? Colors.black.withOpacity(opacity),
-                  gradient: backgroundGradient),
-              child: SafeArea(
-                child: Stack(
-                  alignment: Alignment.center,
-                  fit: StackFit.expand,
-                  children: [
-                    PageView.builder(
-                      itemCount: imagePaths.length + 1,
-                      controller:
-                          PageController(initialPage: initialIndex ?? 0),
-                      onPageChanged: (index) {
-                        if (index == imagePaths.length) {
-                          Navigator.of(context).pop();
-                        } else {
-                          onSwipe?.call(index);
-                        }
+            child: InkWell(
+              onTap: closeWithOnTap ? () => Navigator.of(context).pop() : null,
+              child: Container(
+                decoration: BoxDecoration(color: backgroundColor ?? Colors.black.withOpacity(opacity), gradient: backgroundGradient),
+                child: SafeArea(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    fit: StackFit.expand,
+                    children: [
+                      PageView.builder(
+                        itemCount: imagePaths.length + 1,
+                        controller: PageController(initialPage: initialIndex ?? 0),
+                        onPageChanged: (index) {
+                          if (index == imagePaths.length) {
+                            Navigator.of(context).pop();
+                          } else {
+                            onSwipe?.call(index);
+                          }
 
-                        Future.microtask(() => setState(() {
-                              activeIndex = index;
-                            }));
-                      },
-                      itemBuilder: (context, index) {
-                        if (index == imagePaths.length) {
-                          return const SizedBox();
-                        }
-                        return _AVSImageOnePage(
-                          setBackgroundOpacity: (p0) {
-                            opacity = p0;
-                            Future.microtask(() => setState(() {}));
-                          },
-                          child: AVSImage(
-                            imagePaths[index],
-                            zoom: false,
-                          ),
-                        );
-                      },
-                    ),
-                    showCloseButton == true
-                        ? Positioned(
-                            top: closeButtonPosition ==
-                                        CloseButtonPosition.topLeft ||
-                                    closeButtonPosition ==
-                                        CloseButtonPosition.topRight
-                                ? 20
-                                : null,
-                            right: closeButtonPosition ==
-                                        CloseButtonPosition.topRight ||
-                                    closeButtonPosition ==
-                                        CloseButtonPosition.bottomRight
-                                ? 20
-                                : null,
-                            bottom: closeButtonPosition ==
-                                        CloseButtonPosition.bottomLeft ||
-                                    closeButtonPosition ==
-                                        CloseButtonPosition.bottomRight
-                                ? 20
-                                : null,
-                            left: closeButtonPosition ==
-                                        CloseButtonPosition.topLeft ||
-                                    closeButtonPosition ==
-                                        CloseButtonPosition.bottomLeft
-                                ? 20
-                                : null,
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: customCloseButton ??
-                                  Container(
-                                    padding: const EdgeInsets.all(10),
-                                    child: const Icon(Icons.close,
-                                        color: Colors.white),
-                                  ),
+                          Future.microtask(() => setState(() {
+                                activeIndex = index;
+                              }));
+                        },
+                        itemBuilder: (context, index) {
+                          if (index == imagePaths.length) {
+                            return const SizedBox();
+                          }
+                          return _AVSImageOnePage(
+                            setBackgroundOpacity: (p0) {
+                              opacity = p0;
+                              Future.microtask(() => setState(() {}));
+                            },
+                            child: AVSImage(
+                              imagePaths[index],
+                              zoom: false,
                             ),
-                          )
-                        : const SizedBox(),
-
-                    // Bottom Bar
-                    showBottomBar == false || imagePaths.length < 2
-                        ? const SizedBox()
-                        : Positioned(
-                            bottom: 20,
-                            child: SizedBox(
-                              height: imageGalleryStyle?.slideHeight ?? 9,
-                              child: ListView.builder(
-                                itemCount: imagePaths.length,
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return activeIndex == index
-                                      ? activeSlideWidget(opacity: opacity)
-                                      : inActiveSlideWidget(opacity: opacity);
+                          );
+                        },
+                      ),
+                      showCloseButton == true
+                          ? Positioned(
+                              top: closeButtonPosition == ButtonPosition.topLeft || closeButtonPosition == ButtonPosition.topRight ? 20 : null,
+                              right: closeButtonPosition == ButtonPosition.topRight || closeButtonPosition == ButtonPosition.bottomRight ? 20 : null,
+                              bottom: closeButtonPosition == ButtonPosition.bottomLeft || closeButtonPosition == ButtonPosition.bottomRight ? 20 : null,
+                              left: closeButtonPosition == ButtonPosition.topLeft || closeButtonPosition == ButtonPosition.bottomLeft ? 20 : null,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).pop();
                                 },
+                                child: Row(
+                                  children: [
+                                    customCloseButton ?? const Icon(Icons.close, color: Colors.white),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+
+                      secondaryButton != null
+                          ? Positioned(
+                              top: secondaryButtonPosition == ButtonPosition.topLeft || secondaryButtonPosition == ButtonPosition.topRight ? 20 : null,
+                              right: secondaryButtonPosition == ButtonPosition.topRight || secondaryButtonPosition == ButtonPosition.bottomRight ? 20 : null,
+                              bottom: secondaryButtonPosition == ButtonPosition.bottomLeft || secondaryButtonPosition == ButtonPosition.bottomRight ? 20 : null,
+                              left: secondaryButtonPosition == ButtonPosition.topLeft || secondaryButtonPosition == ButtonPosition.bottomLeft ? 20 : null,
+                              child: secondaryButton ?? const SizedBox(),
+                            )
+                          : const SizedBox(),
+
+                      // Bottom Bar
+                      showBottomBar == false || imagePaths.length < 2
+                          ? const SizedBox()
+                          : Positioned(
+                              bottom: 20,
+                              child: SizedBox(
+                                height: imageGalleryStyle?.slideHeight ?? 9,
+                                child: ListView.builder(
+                                  itemCount: imagePaths.length,
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return activeIndex == index ? activeSlideWidget(opacity: opacity) : inActiveSlideWidget(opacity: opacity);
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -153,9 +149,7 @@ class AVSImageGallery {
   }
 
   Widget activeSlideWidget({required double opacity}) {
-    return (imageGalleryStyle?.activeSlideIcon ?? "").isNotEmpty
-        ? activeCustomWidgetSlideWidget(opacity: opacity)
-        : activeDefaultSlideWidget(opacity: opacity);
+    return (imageGalleryStyle?.activeSlideIcon ?? "").isNotEmpty ? activeCustomWidgetSlideWidget(opacity: opacity) : activeDefaultSlideWidget(opacity: opacity);
   }
 
   Widget activeDefaultSlideWidget({required double opacity}) {
@@ -186,9 +180,7 @@ class AVSImageGallery {
   }
 
   Widget inActiveSlideWidget({required double opacity}) {
-    return (imageGalleryStyle?.inActiveSlideIcon ?? "").isNotEmpty
-        ? inActiveCustomWidgetSlideWidget(opacity: opacity)
-        : inActiveDefaultSlideWidget(opacity: opacity);
+    return (imageGalleryStyle?.inActiveSlideIcon ?? "").isNotEmpty ? inActiveCustomWidgetSlideWidget(opacity: opacity) : inActiveDefaultSlideWidget(opacity: opacity);
   }
 
   Widget inActiveDefaultSlideWidget({required double opacity}) {

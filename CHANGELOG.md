@@ -1,3 +1,8 @@
+## 1.1.8
+
+- AVSImagaGallery secondary Button supported
+- AVSImagaGallery  closeWithOnTap supported default false
+
 ## 1.1.7
 
 - Slidebar is hidden if the element of the my list is less than 2.

@@ -70,17 +70,26 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 AVSImageGallery(
                   context,
-                  closeButtonPosition: CloseButtonPosition.topLeft,
-                  customCloseButton:
-                      const Icon(Icons.delete, color: Colors.red),
+                  closeWithOnTap: true,
+                  // closeButtonPosition: ButtonPosition.topLeft,
+                  // customCloseButton: const Icon(Icons.delete, color: Colors.red),
+                  secondaryButton: InkWell(
+                    onTap: () {
+                      print("Secondary Button Tapped");
+                    },
+                    child: const Icon(
+                      Icons.share,
+                      color: Colors.red,
+                    ),
+                  ),
                   imagePaths: [
                     "assets/image1.png",
-                    "https://nightgoes.com/wp-content/uploads/2023/09/pro.gaultier_a_modern_electric_night_train_crossing_the_map_of__8751c62e-5aa0-4af7-8138-dddf21d8141b.png.webp",
-                    "https://nightgoes.com/wp-content/uploads/2023/09/paris-berlin-1.png.webp"
-                        "assets/image2.png",
-                    "assets/image3.png",
-                    "assets/image4.png",
-                    "assets/image5.png",
+                    // "https://nightgoes.com/wp-content/uploads/2023/09/pro.gaultier_a_modern_electric_night_train_crossing_the_map_of__8751c62e-5aa0-4af7-8138-dddf21d8141b.png.webp",
+                    // "https://nightgoes.com/wp-content/uploads/2023/09/paris-berlin-1.png.webp"
+                    //     "assets/image2.png",
+                    // "assets/image3.png",
+                    // "assets/image4.png",
+                    // "assets/image5.png",
                   ],
                   imageGalleryStyle: ImageGalleryStyle(
                     slideHeight: 18,
@@ -122,9 +131,7 @@ class HomePage extends StatelessWidget {
                 color: Colors.grey[300],
                 image: DecorationImage(
                   fit: BoxFit.contain,
-                  image: AVSImageProvider(
-                      "https://www.svgrepo.com/show/530440/machine-vision.svg",
-                      scale: 9),
+                  image: AVSImageProvider("https://www.svgrepo.com/show/530440/machine-vision.svg", scale: 9),
                 ),
               ),
               child: const Text("SVG Image Provider"),

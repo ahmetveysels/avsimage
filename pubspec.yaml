@@ -8,7 +8,7 @@ topics:
   - avs-svg-provider
   - image-gallery
 
-version: 1.1.7
+version: 1.1.8
 homepage: https://github.com/ahmetveysels
 repository: https://github.com/ahmetveysels/avsimage
 
@@ -23,6 +23,7 @@ dependencies:
     sdk: flutter
   flutter_svg: ^2.0.10+1
   logger: ^2.4.0
+  share_plus: ^10.1.1
 
 dev_dependencies:
   flutter_lints: ^5.0.0
