@@ -5,6 +5,7 @@ import 'package:avs_svg_provider/avs_svg_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 part 'components/_svg_gradient_mask.dart';
@@ -99,8 +100,6 @@ class AVSImage extends StatelessWidget {
   ///
   final Widget? progressIndicatorWidget;
 
-  final bool isSvg;
-
   final AVSImageType imageType;
 
   final BoxFit _defaultFit;
@@ -125,8 +124,7 @@ class AVSImage extends StatelessWidget {
     this.onDoubleTap,
     this.onLongPress,
     this.progressIndicatorWidget,
-  })  : isSvg = _isSvgCheck(path),
-        imageType = _getImageType(path),
+  })  : imageType = _getImageType(path),
         url = path,
         _defaultFit = isCircle == true ? BoxFit.cover : fit;
 
@@ -199,19 +197,29 @@ class AVSImage extends StatelessWidget {
   }
 
   Widget _buildBody() {
-    if (isSvg && imageType == AVSImageType.asset) {
-      return _buildAssetSVG();
-    } else if (isSvg && imageType == AVSImageType.network) {
-      return _buildNetworkSVG();
-    } else if (isSvg == false && imageType == AVSImageType.asset) {
-      return _buildAssetImage();
-    } else if (isSvg == false && imageType == AVSImageType.network) {
-      return _buildNetworkImage();
-    } else if (isSvg == false && imageType == AVSImageType.file) {
-      return _buildFileImage();
-    } else {
-      return Container();
-    }
+    return FutureBuilder(
+      future: _isSvgCheck(url),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          bool isSvg = snapshot.data as bool;
+          if (isSvg && imageType == AVSImageType.asset) {
+            return _buildAssetSVG();
+          } else if (isSvg && imageType == AVSImageType.network) {
+            return _buildNetworkSVG();
+          } else if (isSvg == false && imageType == AVSImageType.asset) {
+            return _buildAssetImage();
+          } else if (isSvg == false && imageType == AVSImageType.network) {
+            return _buildNetworkImage();
+          } else if (isSvg == false && imageType == AVSImageType.file) {
+            return _buildFileImage();
+          } else {
+            return Container();
+          }
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 
   Widget _buildAssetSVG() {
@@ -454,17 +462,16 @@ class AVSImage extends StatelessWidget {
 }
 
 // ignore: non_constant_identifier_names
-ImageProvider AVSImageProvider(
-  String path, {
-  double? height,
-  double? width,
-  Color? color,
-  int scale = 1,
-  LinearGradient? gradient,
-}) {
-  bool isSvg = _isSvgCheck(path);
+ImageProvider AVSImageProvider(String path,
+    {double? height,
+    double? width,
+    Color? color,
+    int scale = 1,
+    LinearGradient? gradient}) {
   bool isLocalPosition =
       _getImageType(path) == AVSImageType.network ? false : true;
+
+  bool isSvg = _isSvgCheckisProvider(path);
 
   if (isSvg) {
     return AVSSVGProvider(path,

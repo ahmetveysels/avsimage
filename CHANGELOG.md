@@ -1,3 +1,8 @@
+## 1.1.9 Yapılacaklar
+
+- SharePlus package removed 
+- Some Fix
+
 ## 1.1.8
 
 - AVSImagaGallery secondary Button supported
