@@ -2,6 +2,7 @@
 
 - SharePlus package removed 
 - Some Fix
+- http dependency added
 
 ## 1.1.8
 
