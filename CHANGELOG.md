@@ -1,4 +1,13 @@
-## 1.1.9 Yapılacaklar
+## 1.1.11
+
+- AVSImage 'zoomCloseType' property added
+- 
+
+## 1.1.10
+
+- GetX dependicy removed
+  
+## 1.1.9
 
 - SharePlus package removed 
 - Some Fix

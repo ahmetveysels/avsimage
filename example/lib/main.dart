@@ -1,5 +1,4 @@
 import 'package:avs_image/avs_image.dart';
-import 'package:avs_image/avs_image_gallery.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -57,53 +56,54 @@ class HomePage extends StatelessWidget {
               AVSImage(
                 "https://images.pexels.com/photos/378570/pexels-photo-378570.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 radius: BorderRadius.circular(20),
-                onTap: () {
-                  AVSImageGallery(
-                    context,
-                    closeWithOnTap: true,
-                    // closeButtonPosition: ButtonPosition.topLeft,
-                    // customCloseButton: const Icon(Icons.delete, color: Colors.red),
-                    secondaryButton: InkWell(
-                      onTap: () {
-                        print("Secondary Button Tapped");
-                      },
-                      child: const Icon(
-                        Icons.share,
-                        color: Colors.red,
-                      ),
-                    ),
-                    imagePaths: [
-                      "assets/image1.png",
-                      // "https://nightgoes.com/wp-content/uploads/2023/09/pro.gaultier_a_modern_electric_night_train_crossing_the_map_of__8751c62e-5aa0-4af7-8138-dddf21d8141b.png.webp",
-                      // "https://nightgoes.com/wp-content/uploads/2023/09/paris-berlin-1.png.webp"
-                      //     "assets/image2.png",
-                      // "assets/image3.png",
-                      // "assets/image4.png",
-                      // "assets/image5.png",
-                    ],
-                    imageGalleryStyle: ImageGalleryStyle(
-                      slideHeight: 18,
-                      slideWidth: 18,
-                      activeSlideColor: Colors.red,
-                      inActiveSlideColor: Colors.amber,
-                      activeSlideIcon: "assets/star-solid.svg",
-                      inActiveSlideIcon: "assets/star-regular.svg",
-                    ),
+                // onTap: () {
+                //   AVSImageGallery(
+                //     context,
+                //     closeWithOnTap: true,
+                //     // closeButtonPosition: ButtonPosition.topLeft,
+                //     // customCloseButton: const Icon(Icons.delete, color: Colors.red),
+                //     secondaryButton: InkWell(
+                //       onTap: () {
+                //         print("Secondary Button Tapped");
+                //       },
+                //       child: const Icon(
+                //         Icons.share,
+                //         color: Colors.red,
+                //       ),
+                //     ),
+                //     imagePaths: [
+                //       "assets/image1.png",
+                //       // "https://nightgoes.com/wp-content/uploads/2023/09/pro.gaultier_a_modern_electric_night_train_crossing_the_map_of__8751c62e-5aa0-4af7-8138-dddf21d8141b.png.webp",
+                //       // "https://nightgoes.com/wp-content/uploads/2023/09/paris-berlin-1.png.webp"
+                //       //     "assets/image2.png",
+                //       // "assets/image3.png",
+                //       // "assets/image4.png",
+                //       // "assets/image5.png",
+                //     ],
+                //     imageGalleryStyle: ImageGalleryStyle(
+                //       slideHeight: 18,
+                //       slideWidth: 18,
+                //       activeSlideColor: Colors.red,
+                //       inActiveSlideColor: Colors.amber,
+                //       activeSlideIcon: "assets/star-solid.svg",
+                //       inActiveSlideIcon: "assets/star-regular.svg",
+                //     ),
 
-                    // initialIndex: 2,
-                    backgroundColor: Colors.red,
-                    backgroundGradient: const LinearGradient(
-                      colors: [Colors.blue, Color.fromARGB(255, 176, 200, 91)],
-                      tileMode: TileMode.clamp,
-                      begin: Alignment.bottomLeft,
-                      end: Alignment.topRight,
-                    ),
-                  ).show();
-                },
+                //     // initialIndex: 2,
+                //     backgroundColor: Colors.red,
+                //     backgroundGradient: const LinearGradient(
+                //       colors: [Colors.blue, Color.fromARGB(255, 176, 200, 91)],
+                //       tileMode: TileMode.clamp,
+                //       begin: Alignment.bottomLeft,
+                //       end: Alignment.topRight,
+                //     ),
+                //   ).show();
+                // },
                 height: 200,
                 zoom: true,
+                zoomCloseType: ZoomCloseType.dragAndTap,
                 cachedImage: false,
-                zoomStyle: ZoomStyle.onDoubleTap,
+                zoomStyle: ZoomStyle.onTap,
                 alignment: Alignment.center,
                 progressIndicatorWidget: const Text("loading..."),
                 errorImgWidget: const Icon(
@@ -121,7 +121,9 @@ class HomePage extends StatelessWidget {
                   color: Colors.grey[300],
                   image: DecorationImage(
                     fit: BoxFit.contain,
-                    image: AVSImageProvider("https://www.svgrepo.com/show/530440/machine-vision.svg", scale: 9),
+                    image: AVSImageProvider(
+                        "https://www.svgrepo.com/show/530440/machine-vision.svg",
+                        scale: 9),
                   ),
                 ),
                 child: const Text("SVG Image Provider"),

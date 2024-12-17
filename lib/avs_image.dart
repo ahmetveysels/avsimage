@@ -18,6 +18,8 @@ enum ButtonPosition { topRight, topLeft, bottomRight, bottomLeft }
 
 enum ZoomStyle { onTap, onDoubleTap, onLongPress }
 
+enum ZoomCloseType { dragAndTap, drag }
+
 class AVSImage extends StatelessWidget {
   /// Image Url or Path
   final String url;
@@ -84,6 +86,9 @@ class AVSImage extends StatelessWidget {
   //Image zoom start style. Default onTap
   final ZoomStyle zoomStyle;
 
+  /// Image zoom close type. Default dragAndTap
+  final ZoomCloseType zoomCloseType;
+
   /// Image onTap function. if this is not null and zoomStyle.onTap then zoom is false
   ///
   final Function()? onTap;
@@ -117,6 +122,7 @@ class AVSImage extends StatelessWidget {
     this.fit = BoxFit.contain,
     this.isCircle,
     this.zoom = false,
+    this.zoomCloseType = ZoomCloseType.dragAndTap,
     this.errorImgWidget,
     this.cachedImage = true,
     this.showProgressIndicator = true,
@@ -433,7 +439,10 @@ class AVSImage extends StatelessWidget {
   }
 
   void _zoomFunc(BuildContext context, String img) {
-    AVSImageGallery(context, imagePaths: [img]).show();
+    AVSImageGallery(context,
+            imagePaths: [img],
+            closeWithOnTap: zoomCloseType == ZoomCloseType.dragAndTap)
+        .show();
   }
 
   Future<void>? _onTapFunction(BuildContext context) async {

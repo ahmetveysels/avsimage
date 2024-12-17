@@ -9,11 +9,9 @@ AVSImage package. ALL IN ONE! A Flutter package that you can get and use images 
 
 ## 👍 Like us on [pub.dev](https://pub.dev/packages/avs_image) to support us!
 
-## What's new? v1.1.8
+## What's new? v1.1.11
 
-- AVSImagaGallery secondary Button supported
-- 
-- AVSImagaGallery  closeWithOnTap supported default false
+- AVSImage 'zoomCloseType' property added
  
 ## Getting started
 
