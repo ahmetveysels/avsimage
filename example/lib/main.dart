@@ -44,7 +44,8 @@ class HomePage extends StatelessWidget {
                   AVSImageGallery(
                     context,
                     titleAlignment: Alignment.center,
-                    titlePadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    titlePadding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
                     titleTextStyle: const TextStyle(
                       color: Colors.red,
                       fontSize: 20,
@@ -55,11 +56,16 @@ class HomePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     images: [
-                      AVSGalleryItemModel(title: "Image 1", url: "assets/image1.png"),
-                      AVSGalleryItemModel(title: "Image 2", url: "assets/image2.png"),
-                      AVSGalleryItemModel(title: "Image 3", url: "assets/image3.png"),
-                      AVSGalleryItemModel(title: "Image 4", url: "assets/image4.png"),
-                      AVSGalleryItemModel(title: "Image 5", url: "assets/image5.png"),
+                      AVSGalleryItemModel(
+                          title: "Image 1", url: "assets/image1.png"),
+                      AVSGalleryItemModel(
+                          title: "Image 2", url: "assets/image2.png"),
+                      AVSGalleryItemModel(
+                          title: "Image 3", url: "assets/image3.png"),
+                      AVSGalleryItemModel(
+                          title: "Image 4", url: "assets/image4.png"),
+                      AVSGalleryItemModel(
+                          title: "Image 5", url: "assets/image5.png"),
                     ],
                   ).show();
                 },
@@ -91,7 +97,9 @@ class HomePage extends StatelessWidget {
                   color: Colors.grey[300],
                   image: DecorationImage(
                     fit: BoxFit.contain,
-                    image: AVSImageProvider("https://www.svgrepo.com/show/530440/machine-vision.svg", scale: 9),
+                    image: AVSImageProvider(
+                        "https://www.svgrepo.com/show/530440/machine-vision.svg",
+                        scale: 9),
                   ),
                 ),
                 child: const Text("SVG Image Provider"),
