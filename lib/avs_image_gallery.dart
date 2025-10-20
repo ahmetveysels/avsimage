@@ -72,7 +72,10 @@ class AVSImageGallery {
             child: InkWell(
               onTap: closeWithOnTap ? () => Navigator.of(context).pop() : null,
               child: Container(
-                decoration: BoxDecoration(color: backgroundColor ?? Colors.black.withValues(alpha: opacity), gradient: backgroundGradient),
+                decoration: BoxDecoration(
+                    color: backgroundColor ??
+                        Colors.black.withValues(alpha: opacity),
+                    gradient: backgroundGradient),
                 child: SafeArea(
                   child: Stack(
                     alignment: Alignment.center,
@@ -116,14 +119,19 @@ class AVSImageGallery {
                                     zoom: false,
                                   ),
                                 ),
-                                if (images[index].title.isNotEmpty && showTitle == true)
+                                if (images[index].title.isNotEmpty &&
+                                    showTitle == true)
                                   Align(
-                                    alignment: titleAlignment ?? Alignment.topCenter,
+                                    alignment:
+                                        titleAlignment ?? Alignment.topCenter,
                                     child: SafeArea(
                                       child: Container(
-                                        margin: titleMargin ?? const EdgeInsets.all(20),
-                                        padding: titlePadding ?? const EdgeInsets.all(20),
-                                        decoration: titleDecoration ?? const BoxDecoration(),
+                                        margin: titleMargin ??
+                                            const EdgeInsets.all(20),
+                                        padding: titlePadding ??
+                                            const EdgeInsets.all(20),
+                                        decoration: titleDecoration ??
+                                            const BoxDecoration(),
                                         child: Text(
                                           images[index].title,
                                           style: titleTextStyle ??
@@ -145,17 +153,39 @@ class AVSImageGallery {
 
                       showCloseButton == true
                           ? Positioned(
-                              top: closeButtonPosition == ButtonPosition.topLeft || closeButtonPosition == ButtonPosition.topRight ? 20 : null,
-                              right: closeButtonPosition == ButtonPosition.topRight || closeButtonPosition == ButtonPosition.bottomRight ? 20 : null,
-                              bottom: closeButtonPosition == ButtonPosition.bottomLeft || closeButtonPosition == ButtonPosition.bottomRight ? 20 : null,
-                              left: closeButtonPosition == ButtonPosition.topLeft || closeButtonPosition == ButtonPosition.bottomLeft ? 20 : null,
+                              top: closeButtonPosition ==
+                                          ButtonPosition.topLeft ||
+                                      closeButtonPosition ==
+                                          ButtonPosition.topRight
+                                  ? 20
+                                  : null,
+                              right: closeButtonPosition ==
+                                          ButtonPosition.topRight ||
+                                      closeButtonPosition ==
+                                          ButtonPosition.bottomRight
+                                  ? 20
+                                  : null,
+                              bottom: closeButtonPosition ==
+                                          ButtonPosition.bottomLeft ||
+                                      closeButtonPosition ==
+                                          ButtonPosition.bottomRight
+                                  ? 20
+                                  : null,
+                              left: closeButtonPosition ==
+                                          ButtonPosition.topLeft ||
+                                      closeButtonPosition ==
+                                          ButtonPosition.bottomLeft
+                                  ? 20
+                                  : null,
                               child: InkWell(
                                 onTap: () {
                                   Navigator.of(context).pop();
                                 },
                                 child: Row(
                                   children: [
-                                    customCloseButton ?? const Icon(Icons.close, color: Colors.white),
+                                    customCloseButton ??
+                                        const Icon(Icons.close,
+                                            color: Colors.white),
                                   ],
                                 ),
                               ),
@@ -164,10 +194,30 @@ class AVSImageGallery {
 
                       secondaryButton != null
                           ? Positioned(
-                              top: secondaryButtonPosition == ButtonPosition.topLeft || secondaryButtonPosition == ButtonPosition.topRight ? 20 : null,
-                              right: secondaryButtonPosition == ButtonPosition.topRight || secondaryButtonPosition == ButtonPosition.bottomRight ? 20 : null,
-                              bottom: secondaryButtonPosition == ButtonPosition.bottomLeft || secondaryButtonPosition == ButtonPosition.bottomRight ? 20 : null,
-                              left: secondaryButtonPosition == ButtonPosition.topLeft || secondaryButtonPosition == ButtonPosition.bottomLeft ? 20 : null,
+                              top: secondaryButtonPosition ==
+                                          ButtonPosition.topLeft ||
+                                      secondaryButtonPosition ==
+                                          ButtonPosition.topRight
+                                  ? 20
+                                  : null,
+                              right: secondaryButtonPosition ==
+                                          ButtonPosition.topRight ||
+                                      secondaryButtonPosition ==
+                                          ButtonPosition.bottomRight
+                                  ? 20
+                                  : null,
+                              bottom: secondaryButtonPosition ==
+                                          ButtonPosition.bottomLeft ||
+                                      secondaryButtonPosition ==
+                                          ButtonPosition.bottomRight
+                                  ? 20
+                                  : null,
+                              left: secondaryButtonPosition ==
+                                          ButtonPosition.topLeft ||
+                                      secondaryButtonPosition ==
+                                          ButtonPosition.bottomLeft
+                                  ? 20
+                                  : null,
                               child: secondaryButton ?? const SizedBox(),
                             )
                           : const SizedBox(),
@@ -184,7 +234,9 @@ class AVSImageGallery {
                                   scrollDirection: Axis.horizontal,
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
-                                    return activeIndex == index ? activeSlideWidget(opacity: opacity) : inActiveSlideWidget(opacity: opacity);
+                                    return activeIndex == index
+                                        ? activeSlideWidget(opacity: opacity)
+                                        : inActiveSlideWidget(opacity: opacity);
                                   },
                                 ),
                               ),
@@ -201,7 +253,9 @@ class AVSImageGallery {
   }
 
   Widget activeSlideWidget({required double opacity}) {
-    return (imageGalleryStyle?.activeSlideIcon ?? "").isNotEmpty ? activeCustomWidgetSlideWidget(opacity: opacity) : activeDefaultSlideWidget(opacity: opacity);
+    return (imageGalleryStyle?.activeSlideIcon ?? "").isNotEmpty
+        ? activeCustomWidgetSlideWidget(opacity: opacity)
+        : activeDefaultSlideWidget(opacity: opacity);
   }
 
   Widget activeDefaultSlideWidget({required double opacity}) {
@@ -232,7 +286,9 @@ class AVSImageGallery {
   }
 
   Widget inActiveSlideWidget({required double opacity}) {
-    return (imageGalleryStyle?.inActiveSlideIcon ?? "").isNotEmpty ? inActiveCustomWidgetSlideWidget(opacity: opacity) : inActiveDefaultSlideWidget(opacity: opacity);
+    return (imageGalleryStyle?.inActiveSlideIcon ?? "").isNotEmpty
+        ? inActiveCustomWidgetSlideWidget(opacity: opacity)
+        : inActiveDefaultSlideWidget(opacity: opacity);
   }
 
   Widget inActiveDefaultSlideWidget({required double opacity}) {

@@ -43,7 +43,10 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   AVSImageGallery(
                     context,
-                    titleTextStyle: const TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.w600),
+                    titleTextStyle: const TextStyle(
+                        color: Colors.red,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600),
                     titleDecoration: BoxDecoration(
                       color: Colors.blue.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(10),
@@ -52,18 +55,24 @@ class HomePage extends StatelessWidget {
                     initialIndex: 2,
                     titleAlignment: Alignment.topCenter,
                     titleMargin: const EdgeInsets.all(44),
-                    titlePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    titlePadding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
                     imageGalleryStyle: ImageGalleryStyle(
                       activeSlideColor: Colors.red,
                       inActiveSlideColor: Colors.blue,
                     ),
                     loop: true,
                     images: [
-                      AVSGalleryItemModel(title: "Image 1", url: "assets/image1.png"),
-                      AVSGalleryItemModel(title: "Image 2", url: "assets/image2.png"),
-                      AVSGalleryItemModel(title: "Image 3", url: "assets/image3.png"),
-                      AVSGalleryItemModel(title: "Image 4", url: "assets/image4.png"),
-                      AVSGalleryItemModel(title: "Image 5", url: "assets/image5.png"),
+                      AVSGalleryItemModel(
+                          title: "Image 1", url: "assets/image1.png"),
+                      AVSGalleryItemModel(
+                          title: "Image 2", url: "assets/image2.png"),
+                      AVSGalleryItemModel(
+                          title: "Image 3", url: "assets/image3.png"),
+                      AVSGalleryItemModel(
+                          title: "Image 4", url: "assets/image4.png"),
+                      AVSGalleryItemModel(
+                          title: "Image 5", url: "assets/image5.png"),
                     ],
                   ).show();
                 },
@@ -95,7 +104,9 @@ class HomePage extends StatelessWidget {
                   color: Colors.grey[300],
                   image: DecorationImage(
                     fit: BoxFit.contain,
-                    image: AVSImageProvider("https://www.svgrepo.com/show/530440/machine-vision.svg", scale: 9),
+                    image: AVSImageProvider(
+                        "https://www.svgrepo.com/show/530440/machine-vision.svg",
+                        scale: 9),
                   ),
                 ),
                 child: const Text("SVG Image Provider"),
