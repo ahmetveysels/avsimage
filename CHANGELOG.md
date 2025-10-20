@@ -1,3 +1,9 @@
+## 1.2.0
+
+- AVSImageGallery imagePath change AVSGalleryItemModel
+- AVSImageGallery added title properties
+
+
 ## 1.1.11
 
 - AVSImage 'zoomCloseType' property added
