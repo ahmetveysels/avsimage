@@ -43,29 +43,27 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   AVSImageGallery(
                     context,
-                    titleAlignment: Alignment.center,
-                    titlePadding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 20),
-                    titleTextStyle: const TextStyle(
-                      color: Colors.red,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    titleTextStyle: const TextStyle(color: Colors.red, fontSize: 16, fontWeight: FontWeight.w600),
                     titleDecoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.5),
+                      color: Colors.blue.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(10),
                     ),
+                    showTitle: true,
+                    initialIndex: 2,
+                    titleAlignment: Alignment.topCenter,
+                    titleMargin: const EdgeInsets.all(44),
+                    titlePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    imageGalleryStyle: ImageGalleryStyle(
+                      activeSlideColor: Colors.red,
+                      inActiveSlideColor: Colors.blue,
+                    ),
+                    loop: true,
                     images: [
-                      AVSGalleryItemModel(
-                          title: "Image 1", url: "assets/image1.png"),
-                      AVSGalleryItemModel(
-                          title: "Image 2", url: "assets/image2.png"),
-                      AVSGalleryItemModel(
-                          title: "Image 3", url: "assets/image3.png"),
-                      AVSGalleryItemModel(
-                          title: "Image 4", url: "assets/image4.png"),
-                      AVSGalleryItemModel(
-                          title: "Image 5", url: "assets/image5.png"),
+                      AVSGalleryItemModel(title: "Image 1", url: "assets/image1.png"),
+                      AVSGalleryItemModel(title: "Image 2", url: "assets/image2.png"),
+                      AVSGalleryItemModel(title: "Image 3", url: "assets/image3.png"),
+                      AVSGalleryItemModel(title: "Image 4", url: "assets/image4.png"),
+                      AVSGalleryItemModel(title: "Image 5", url: "assets/image5.png"),
                     ],
                   ).show();
                 },
@@ -73,7 +71,7 @@ class HomePage extends StatelessWidget {
               ),
 
               AVSImage(
-                "https://images.pexels.com/photos/378570/pexels-photo-378570.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                "https://images.pexels.com/photos/378570/pexels-photo-378570.jpeg?auto=compress&cs=tinysrgb&w=1260&h=2750&dpr=2",
                 radius: BorderRadius.circular(20),
                 height: 200,
                 zoom: true,
@@ -97,9 +95,7 @@ class HomePage extends StatelessWidget {
                   color: Colors.grey[300],
                   image: DecorationImage(
                     fit: BoxFit.contain,
-                    image: AVSImageProvider(
-                        "https://www.svgrepo.com/show/530440/machine-vision.svg",
-                        scale: 9),
+                    image: AVSImageProvider("https://www.svgrepo.com/show/530440/machine-vision.svg", scale: 9),
                   ),
                 ),
                 child: const Text("SVG Image Provider"),
