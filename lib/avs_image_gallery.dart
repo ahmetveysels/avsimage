@@ -30,7 +30,7 @@ class AVSImageGallery {
   final Widget? secondaryButton;
 
   final ImageGalleryStyle? imageGalleryStyle;
-
+  final Duration? transitionDuration;
   AVSImageGallery(
     this.context, {
     required this.images,
@@ -54,6 +54,7 @@ class AVSImageGallery {
     this.titlePadding,
     this.titleMargin,
     this.loop = false,
+    this.transitionDuration,
   });
   PageController? pageController;
 
@@ -64,7 +65,8 @@ class AVSImageGallery {
     await showGeneralDialog(
       context: context,
       barrierDismissible: false,
-      transitionDuration: const Duration(milliseconds: 300),
+      transitionDuration:
+          transitionDuration ?? const Duration(milliseconds: 300),
       pageBuilder: (context, animation, secondaryAnimation) => StatefulBuilder(
         builder: (context, setState) {
           return Material(

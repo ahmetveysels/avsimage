@@ -51,6 +51,7 @@ class HomePage extends StatelessWidget {
                       color: Colors.blue.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(10),
                     ),
+                    transitionDuration: const Duration(milliseconds: 0),
                     showTitle: true,
                     initialIndex: 2,
                     titleAlignment: Alignment.topCenter,

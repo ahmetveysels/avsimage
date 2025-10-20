@@ -1,3 +1,7 @@
+## 1.2.3
+
+-AVSImageGallery transitionDuration parameter added
+
 ## 1.2.2
 
 -AVSImageGallery loop and margin parameter added
