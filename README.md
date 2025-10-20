@@ -9,9 +9,10 @@ AVSImage package. ALL IN ONE! A Flutter package that you can get and use images 
 
 ## 👍 Like us on [pub.dev](https://pub.dev/packages/avs_image) to support us!
 
-## What's new? v1.1.11
+## What's new? v1.2.0
 
-- AVSImage 'zoomCloseType' property added
+- AVSImageGallery imagePath change AVSGalleryItemModel
+- AVSImageGallery added title properties
  
 ## Getting started
 

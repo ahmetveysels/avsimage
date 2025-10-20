@@ -7,7 +7,7 @@ topics:
   - image-gallery
   - image-viewer
 
-version: 1.1.11
+version: 1.2.0
 homepage: https://github.com/ahmetveysels
 repository: https://github.com/ahmetveysels/avsimage
 
