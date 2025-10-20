@@ -17,6 +17,7 @@ class AVSImageGallery {
   final LinearGradient? backgroundGradient;
   final ButtonPosition closeButtonPosition;
   final Widget? customCloseButton;
+  final bool? showTitle;
   final BoxDecoration? titleDecoration;
   final TextStyle? titleTextStyle;
   final AlignmentGeometry? titleAlignment;
@@ -44,6 +45,7 @@ class AVSImageGallery {
     this.imageGalleryStyle,
     this.secondaryButtonPosition = ButtonPosition.topLeft,
     this.secondaryButton,
+    this.showTitle = false,
     this.titleTextStyle,
     this.titleAlignment,
     this.titleDecoration,
@@ -100,7 +102,7 @@ class AVSImageGallery {
                                     zoom: false,
                                   ),
                                 ),
-                                if (images[index].title.isNotEmpty)
+                                if (images[index].title.isNotEmpty && showTitle == true)
                                   Align(
                                     alignment: titleAlignment ?? Alignment.topCenter,
                                     child: SafeArea(
